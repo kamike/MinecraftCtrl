@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MC服务控制器</string>
+    <string name="account_">账号：</string>
+    <string name="pwd_">密码：</string>
+    <string name="account_hint">请输入登陆账号</string>
+    <string name="pwd_hint">请输入登陆密码</string>
+</resources>

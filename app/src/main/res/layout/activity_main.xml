@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/img_login_bg"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.ppyy.android.mc.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="48dp"
+        android:background="#1f00"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <TextView
+            style="@style/style_txt_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/account_" />
+
+        <EditText
+            android:id="@+id/main_account_et"
+            style="@style/style_txt_normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/account_hint"
+            android:inputType="textUri"
+            android:maxLength="20"
+            android:singleLine="true" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#eee" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:background="#1f00"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <TextView
+            style="@style/style_txt_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/pwd_" />
+
+        <EditText
+            android:id="@+id/main_pwd_et"
+            style="@style/style_txt_normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/pwd_hint"
+            android:inputType="textPassword"
+            android:maxLength="20"
+            android:singleLine="true" />
+    </LinearLayout>
+
+    <Button
+        style="@style/style_txt_normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="64dp"
+        android:background="#cececece"
+        android:clickable="true"
+        android:gravity="center"
+        android:onClick="onclickLogin"
+        android:padding="8dp"
+        android:text="登录" />
+</LinearLayout>

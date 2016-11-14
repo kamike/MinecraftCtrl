@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.wangtao.universallylibs.BaseActivity;
+import com.wangtao.universallylibs.utils.NetworkCore;
+
+import java.util.HashMap;
 
 public class ServerInfoActivity extends BaseActivity {
     private LinearLayout linearScroll;
@@ -57,14 +60,22 @@ public class ServerInfoActivity extends BaseActivity {
     }
 
     public void onclickRestartServico(View view) {
-        handler.sendEmptyMessageDelayed(1, 2000);
+        HashMap<String, Object> params = new HashMap<>();
+        codeFunction=3;
+        params.put("name", codeFunction);
+        NetworkCore.doGet("minecraft.mc",params,handler,SendInfoBean.class);
         progress=ProgressDialog.show(mContext,null,"操作中...",false);
     }
 
     public void onclickClosedServico(View view) {
+        HashMap<String, Object> params = new HashMap<>();
+        codeFunction=2;
+        params.put("name", codeFunction);
+        NetworkCore.doGet("minecraft.mc",params,handler,SendInfoBean.class);
         handler.sendEmptyMessageDelayed(0, 3000);
         progress=ProgressDialog.show(mContext,null,"操作中...",false);
     }
+    private int codeFunction=1;
 
     private ProgressDialog progress = null;
     private Handler handler = new Handler() {
@@ -73,17 +84,24 @@ public class ServerInfoActivity extends BaseActivity {
             if (progress != null) {
                 progress.dismiss();
             }
-            switch (msg.what) {
-                case 0:
+            SendInfoBean serverInfo= (SendInfoBean) msg.obj;
+            if(serverInfo.code==0){
+                doShowMesage(serverInfo.msg);
+                return;
+            }
+            switch (codeFunction) {
+                case 1:
+                    doShowToastLong("获取服务器信息！");
+                    updataShowTxtContent(linearScroll, "运行状态：", "已关闭.......");
+                    break;
+
+                case 2:
                     doShowToastLong("成功关闭服务器！");
                     updataShowTxtContent(linearScroll, "运行状态：", "已关闭.......");
                     break;
-                case 1:
+                case 3:
                     doShowToastLong("服务器重启...");
                     updataShowTxtContent(linearScroll, "运行状态：", "开启中.......");
-                    break;
-                case 2:
-
                     break;
                 default:
 

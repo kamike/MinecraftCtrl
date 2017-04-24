@@ -39,7 +39,7 @@ public class ServerInfoActivity extends BaseActivity {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case 0:
-
+                        doStartOter(CommandActivity.class);
                         break;
                     case 1:
                         doStartOter(ModifyFileActivity.class);

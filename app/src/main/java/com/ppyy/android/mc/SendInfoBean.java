@@ -5,6 +5,7 @@ public class SendInfoBean<T> {
 	public T obj;
 	public int code;
 	public String debugMsg;
+	public String remind;
 
 	
 

@@ -12,7 +12,7 @@ import com.wangtao.universallylibs.utils.NetworkCore;
 
 import java.util.HashMap;
 
-public class MainActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity {
     private EditText etAccount, etPwd;
 
     @Override
@@ -40,14 +40,20 @@ public class MainActivity extends BaseActivity {
             return;
         }
         HashMap<String, Object> params = new HashMap<>();
-        params.put("username", account);
+        params.put("userName", account);
         params.put("password", pwd);
+        doShowProgress();
         NetworkCore.doGet("login", params, new Handler() {
             @Override
             public void handleMessage(Message msg) {
+                doDismiss();
+                if (msg.obj == null) {
+                    doShowMesage(NETWORK_EXCEPTION);
+                    return;
+                }
                 SendInfoBean serverInfo = (SendInfoBean) msg.obj;
-                if (serverInfo.code == 0) {
-                    doShowMesage(serverInfo.msg);
+                if (!isSUccess(serverInfo.msg)) {
+                    doShowMesage(serverInfo.remind);
                     return;
                 }
                 preference.edit().putString("user_account", account).commit();
@@ -55,7 +61,5 @@ public class MainActivity extends BaseActivity {
                 doStartOter(ServerInfoActivity.class);
             }
         }, SendInfoBean.class);
-
-
     }
 }

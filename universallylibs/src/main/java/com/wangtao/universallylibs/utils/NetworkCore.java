@@ -105,7 +105,7 @@ public class NetworkCore {
             client.newCall(req).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    LogUtils.logNetwork("onFailure");
+                    LogUtils.logNetwork("onFailure"+e.getMessage());
                     if (handler == null) {
                         return;
                     }
@@ -117,11 +117,11 @@ public class NetworkCore {
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    LogUtils.logNetwork("onResponse:");
+                    String res = response.body().string();
+                    LogUtils.logNetwork("onResponse:"+res);
                     if (handler == null) {
                         return;
                     }
-                    String res = response.body().string();
                     Message msg = new Message();
                     msg.obj = res;
                     if (t != null) {

@@ -1,6 +1,7 @@
 package com.wangtao.universallylibs;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -232,8 +233,8 @@ public abstract class BaseActivity extends Activity {
                 .findViewById(R.id.include_title_tv);
         ImageView ivBack = (ImageView) linear
                 .findViewById(R.id.include_back_iv);
-        if(tvTitle==null){
-            doLogMsg("doSetTitle："+tvTitle);
+        if (tvTitle == null) {
+            doLogMsg("doSetTitle：" + tvTitle);
             return;
         }
         tvTitle.setText(title);
@@ -244,5 +245,36 @@ public abstract class BaseActivity extends Activity {
                 finish();
             }
         });
+    }
+
+    public boolean isSUccess(String str) {
+        if (TextUtils.isEmpty(str)) {
+            return false;
+        }
+        if ("success".equals(str)) {
+            return true;
+        }
+        return false;
+    }
+
+    private ProgressDialog progress;
+
+    public void doShowProgress() {
+        progress = ProgressDialog.show(this, null, "加载中", true, false);
+    }
+
+    public void doDismiss() {
+        if (progress != null) {
+            if (progress.isShowing()) {
+                progress.dismiss();
+            }
+            progress = null;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        doDismiss();
     }
 }

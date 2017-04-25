@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.ppyy.android.mc.ModifyFileActivity">
+    tools:context="com.ppyy.android.mc.ui.ModifyFileActivity">
 
     <include
         android:id="@+id/modify_file_include"

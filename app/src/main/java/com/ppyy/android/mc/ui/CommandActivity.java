@@ -1,8 +1,9 @@
-package com.ppyy.android.mc;
+package com.ppyy.android.mc.ui;
 
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import com.ppyy.android.mc.R;
 import com.wangtao.universallylibs.BaseActivity;
 
 

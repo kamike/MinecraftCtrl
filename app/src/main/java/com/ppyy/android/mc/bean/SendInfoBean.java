@@ -1,8 +1,8 @@
-package com.ppyy.android.mc;
+package com.ppyy.android.mc.bean;
 
-public class SendInfoBean<T> {
+public class SendInfoBean {
 	public String msg;
-	public T obj;
+	public String obj;
 	public int code;
 	public String debugMsg;
 	public String remind;

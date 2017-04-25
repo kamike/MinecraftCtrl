@@ -1,6 +1,6 @@
-package com.ppyy.android.mc;
+package com.ppyy.android.mc.bean;
 
-public class ServerInfoBean {
+public class BaseServerBean {
 	public String duration;
 	public String resMsg;
 

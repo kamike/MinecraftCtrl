@@ -1,4 +1,4 @@
-package com.ppyy.android.mc;
+package com.ppyy.android.mc.ui;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.ppyy.android.mc.R;
 import com.wangtao.universallylibs.BaseActivity;
 import com.wangtao.universallylibs.utils.FileUtils;
 

@@ -1,4 +1,4 @@
-package com.ppyy.android.mc;
+package com.ppyy.android.mc.ui;
 
 
 import android.os.Handler;
@@ -7,8 +7,9 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
+import com.ppyy.android.mc.R;
+import com.ppyy.android.mc.utils.NetworkCore;
 import com.wangtao.universallylibs.BaseActivity;
-import com.wangtao.universallylibs.utils.NetworkCore;
 
 import java.util.HashMap;
 
@@ -24,6 +25,10 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void setAllData() {
+        if (preference.getBoolean("is_login", false)) {
+            doStartOter(ServerInfoActivity.class);
+            return;
+        }
         etAccount.setText(preference.getString("user_account", ""));
         etAccount.setSelection(etAccount.getText().length());
     }
@@ -46,20 +51,17 @@ public class LoginActivity extends BaseActivity {
         NetworkCore.doGet("login", params, new Handler() {
             @Override
             public void handleMessage(Message msg) {
+                doLogMsg("login:" + msg.obj);
                 doDismiss();
-                if (msg.obj == null) {
-                    doShowMesage(NETWORK_EXCEPTION);
-                    return;
-                }
-                SendInfoBean serverInfo = (SendInfoBean) msg.obj;
-                if (!isSUccess(serverInfo.msg)) {
-                    doShowMesage(serverInfo.remind);
+                if (msg.what <= 0) {
+                    doShowMesage(msg.obj+"");
                     return;
                 }
                 preference.edit().putString("user_account", account).commit();
+                preference.edit().putBoolean("is_login", true).commit();
                 finish();
                 doStartOter(ServerInfoActivity.class);
             }
-        }, SendInfoBean.class);
+        },1);
     }
 }

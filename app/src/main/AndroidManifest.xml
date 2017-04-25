@@ -12,17 +12,17 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".ui.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TestActivity" />
-        <activity android:name=".ServerInfoActivity" />
-        <activity android:name=".ModifyFileActivity" />
-        <activity android:name=".CommandActivity"></activity>
+        <activity android:name=".ui.TestActivity" />
+        <activity android:name=".ui.ServerInfoActivity" />
+        <activity android:name=".ui.ModifyFileActivity" />
+        <activity android:name=".ui.CommandActivity"></activity>
     </application>
 
 </manifest>

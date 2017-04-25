@@ -1,4 +1,4 @@
-package com.ppyy.android.mc;
+package com.ppyy.android.mc.ui;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -8,8 +8,12 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.google.gson.Gson;
+import com.ppyy.android.mc.R;
+import com.ppyy.android.mc.bean.SendInfoBean;
+import com.ppyy.android.mc.bean.ServerInfoBean;
+import com.ppyy.android.mc.utils.NetworkCore;
 import com.wangtao.universallylibs.BaseActivity;
-import com.wangtao.universallylibs.utils.NetworkCore;
 
 import java.util.HashMap;
 
@@ -25,13 +29,39 @@ public class ServerInfoActivity extends BaseActivity {
 
     @Override
     public void setAllData() {
+
+
+        NetworkCore.doGet("info", null, handlerInit, ServerInfoBean.class);
+        doShowProgress();
+        linearScroll.removeAllViews();
         linearScroll.addView(addShowTxtContent("运行状态：", "停止..."));
         linearScroll.addView(addShowTxtContent("开启时长：", "1天2小时50分"));
-        linearScroll.addView(addShowTxtContent("剩余内存：", "3.65G/8G"));
         linearScroll.addView(addShowTxtContent("在线玩家：", "5/20"));
-        linearScroll.addView(addShowTxtContent("白名单是否开启：", "true"));
-        linearScroll.addView(addShowTxtContent("其他参数：", "xxxxxx"));
     }
+
+    private Handler handlerInit = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            doLogMsg("mainObj:"+msg.obj);
+            doDismiss();
+            if (msg.what <= 0) {
+                doShowMesage(msg.obj+"");
+                return;
+            }
+            ServerInfoBean server = new Gson().fromJson(msg.obj+"", ServerInfoBean.class);
+            if (server == null) {
+                return;
+            }
+            String str = "未启动";
+            if (server.status.equals("1")) {
+                str = "已启动";
+            }
+            updataShowTxtContent(linearScroll, "运行状态：", str);
+            updataShowTxtContent(linearScroll, "开启时长：", server.sustainTime);
+            updataShowTxtContent(linearScroll, "在线玩家：", server.playerNum);
+        }
+    };
+
 
     public void onclickFunction(View view) {
         new AlertDialog.Builder(this).setTitle("功能选择").setItems(items, new DialogInterface.OnClickListener() {
@@ -43,7 +73,6 @@ public class ServerInfoActivity extends BaseActivity {
                         break;
                     case 1:
                         doStartOter(ModifyFileActivity.class);
-
                         break;
                     case 2:
 
@@ -61,21 +90,20 @@ public class ServerInfoActivity extends BaseActivity {
 
     public void onclickRestartServico(View view) {
         HashMap<String, Object> params = new HashMap<>();
-        codeFunction=3;
+        codeFunction = 3;
         params.put("name", codeFunction);
-        NetworkCore.doGet("minecraft.mc",params,handler,SendInfoBean.class);
-        progress=ProgressDialog.show(mContext,null,"操作中...",false);
+        NetworkCore.doGet("minecraft.mc", params, handler, SendInfoBean.class);
+        progress = ProgressDialog.show(mContext, null, "操作中...", false);
     }
 
     public void onclickClosedServico(View view) {
-        HashMap<String, Object> params = new HashMap<>();
-        codeFunction=2;
-        params.put("name", codeFunction);
-        NetworkCore.doGet("minecraft.mc",params,handler,SendInfoBean.class);
+        codeFunction = 2;
+        NetworkCore.doGet("minecraft.mc", null, handler, SendInfoBean.class);
         handler.sendEmptyMessageDelayed(0, 3000);
-        progress=ProgressDialog.show(mContext,null,"操作中...",false);
+        progress = ProgressDialog.show(mContext, null, "操作中...", false);
     }
-    private int codeFunction=1;
+
+    private int codeFunction = 1;
 
     private ProgressDialog progress = null;
     private Handler handler = new Handler() {
@@ -84,8 +112,8 @@ public class ServerInfoActivity extends BaseActivity {
             if (progress != null) {
                 progress.dismiss();
             }
-            SendInfoBean serverInfo= (SendInfoBean) msg.obj;
-            if(serverInfo.code==0){
+            SendInfoBean serverInfo = (SendInfoBean) msg.obj;
+            if (serverInfo.code == 0) {
                 doShowMesage(serverInfo.msg);
                 return;
             }

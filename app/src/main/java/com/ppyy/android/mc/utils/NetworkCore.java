@@ -1,10 +1,14 @@
-package com.wangtao.universallylibs.utils;
+package com.ppyy.android.mc.utils;
 
 import android.os.Handler;
 import android.os.Message;
 
+import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
+import com.ppyy.android.mc.bean.SendInfoBean;
+import com.wangtao.universallylibs.BaseActivity;
 import com.wangtao.universallylibs.ConfigProperties;
+import com.wangtao.universallylibs.utils.LogUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +32,7 @@ public class NetworkCore {
     private static final MediaType MEDIA_TYPE = MediaType.parse("application/x-www-form-urlencoded;charset=UTF-8;");
     private static final MediaType MEDIA_TYPE_IMG = MediaType.parse("image/jpg");
 
-    public static void doGet(String urlName, HashMap<String, Object> params, final Handler handler, final int flag, final Class t) {
+    public static void doGet(String urlName, HashMap<String, Object> params, final Handler handler, final int flag) {
         try {
             OkHttpClient client = new OkHttpClient();
             StringBuffer sb = new StringBuffer();
@@ -49,26 +53,35 @@ public class NetworkCore {
                         return;
                     }
                     Message msg = new Message();
-                    msg.obj = null;
-                    msg.what = flag;
+                    msg.obj = BaseActivity.NETWORK_EXCEPTION;
+                    msg.what = -1;
                     handler.sendMessage(msg);
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
+                    String res = response.body().string();
+
+                    LogUtils.logNetwork("onResponse:" + res);
                     if (handler == null) {
                         return;
                     }
                     Message msg = new Message();
-                    String res = response.body().string();
-                    msg.obj = res;
-                    if (t != null) {
                         try {
-                            msg.obj = new Gson().fromJson(res, t);
+                            SendInfoBean send = JSON.parseObject(res, SendInfoBean.class);
+                            if(send==null){
+                                return;
+                            }
+                            if (!"success".equals(send.msg)) {
+                                msg.what = 0;
+                                msg.obj=send.remind;
+                                handler.sendMessage(msg);
+                                return;
+                            }
+                            msg.obj = send.obj;
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                    }
                     msg.what = flag;
                     handler.sendMessage(msg);
                 }
@@ -80,7 +93,7 @@ public class NetworkCore {
     }
 
     public static void doGet(String urlName, HashMap<String, Object> params, final Handler handler, final Class t) {
-        doGet(urlName, params, handler, 1, t);
+        doGet(urlName, params, handler, 1);
     }
 
     public static void doPost(String urlName, HashMap<String, Object> params, final Handler handler, final int flag, final Class t) {
@@ -105,7 +118,7 @@ public class NetworkCore {
             client.newCall(req).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    LogUtils.logNetwork("onFailure"+e.getMessage());
+                    LogUtils.logNetwork("onFailure" + e.getMessage());
                     if (handler == null) {
                         return;
                     }
@@ -118,7 +131,7 @@ public class NetworkCore {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     String res = response.body().string();
-                    LogUtils.logNetwork("onResponse:"+res);
+                    LogUtils.logNetwork("onResponse:" + res);
                     if (handler == null) {
                         return;
                     }

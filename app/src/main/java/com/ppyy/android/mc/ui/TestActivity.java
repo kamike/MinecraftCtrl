@@ -1,4 +1,4 @@
-package com.ppyy.android.mc;
+package com.ppyy.android.mc.ui;
 
 import android.annotation.SuppressLint;
 import android.webkit.JavascriptInterface;
@@ -7,6 +7,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.ppyy.android.mc.R;
 import com.wangtao.universallylibs.BaseActivity;
 
 public class TestActivity extends BaseActivity {

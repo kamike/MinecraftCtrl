@@ -45,30 +45,22 @@
         </LinearLayout>
     </ScrollView>
 
-    <Button
-        style="@style/style_txt_normal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_margin="12dp"
-        android:clickable="true"
-        android:gravity="center"
-        android:onClick="onclickClosedServico"
-        android:padding="8dp"
-        android:text="关闭服务器" />
+
 
     <Button
+
         style="@style/style_txt_normal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_margin="12dp"
         android:clickable="true"
         android:gravity="center"
-        android:onClick="onclickRestartServico"
-        android:padding="8dp"
-        android:text="重启服务器" />
+        android:padding="18dp"
+        android:text="开启服务器"
+        android:layout_marginLeft="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="32dp"
+        android:layout_marginStart="10dp"
+        android:id="@+id/server_info_start_btn" />
 
 </RelativeLayout>

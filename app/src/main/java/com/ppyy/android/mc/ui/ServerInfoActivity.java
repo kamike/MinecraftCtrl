@@ -1,11 +1,11 @@
 package com.ppyy.android.mc.ui;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
@@ -15,17 +15,19 @@ import com.ppyy.android.mc.bean.ServerInfoBean;
 import com.ppyy.android.mc.utils.NetworkCore;
 import com.wangtao.universallylibs.BaseActivity;
 
-import java.util.HashMap;
-
 public class ServerInfoActivity extends BaseActivity {
     private LinearLayout linearScroll;
-    private String[] items = {"控制台(发送命令)", "配置文件修改(插件)", "权限管理(白名单)", "参数设置", "关闭退出软件"};
-
+    private String[] items = {"控制台(发送命令)", "配置文件修改(插件)", "权限管理(白名单)", "查看服务器日志", "关闭退出软件"};
+    private Button btnStart;
     @Override
     public void initShowLayout() {
         setContentView(R.layout.activity_server_info);
         linearScroll = (LinearLayout) findViewById(R.id.server_info_linear);
+        btnStart= (Button) findViewById(R.id.server_info_start_btn);
+        btnStart.setOnClickListener(onclickStartOrStop());
     }
+
+
 
     @Override
     public void setAllData() {
@@ -54,14 +56,60 @@ public class ServerInfoActivity extends BaseActivity {
             }
             String str = "未启动";
             if (server.status.equals("1")) {
+                isStarting=true;
                 str = "已启动";
+            }else{
+                isStarting=false;
             }
+            updataBtnTxt();
             updataShowTxtContent(linearScroll, "运行状态：", str);
             updataShowTxtContent(linearScroll, "开启时长：", server.sustainTime);
             updataShowTxtContent(linearScroll, "在线玩家：", server.playerNum);
         }
     };
 
+    private boolean isStarting=false;
+
+    private void updataBtnTxt(){
+        if(isStarting){
+            btnStart.setText("关闭服务器");
+        }else{
+            btnStart.setText("开启服务器");
+        }
+    }
+
+    private View.OnClickListener onclickStartOrStop() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isStarting){
+                    NetworkCore.doGet("stop", null, handler, SendInfoBean.class);
+                }else{
+                    NetworkCore.doGet("start", null, handler, SendInfoBean.class);
+                }
+                doShowProgress();
+            }
+        };
+    }
+
+
+
+
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            doLogMsg(""+msg.obj);
+           doDismiss();
+            if(msg.what<=0){
+                doShowMesage(msg.obj+"");
+                return;
+            }
+            isStarting=!isStarting;
+            updataBtnTxt();
+
+        }
+    };
 
     public void onclickFunction(View view) {
         new AlertDialog.Builder(this).setTitle("功能选择").setItems(items, new DialogInterface.OnClickListener() {
@@ -78,6 +126,7 @@ public class ServerInfoActivity extends BaseActivity {
 
                         break;
                     case 3:
+                        doStartOter(SystemLogActivity.class);
                         break;
                     case 4:
                         preference.edit().remove("user_account").commit();
@@ -87,54 +136,4 @@ public class ServerInfoActivity extends BaseActivity {
             }
         }).setPositiveButton("取消", null).show();
     }
-
-    public void onclickRestartServico(View view) {
-        HashMap<String, Object> params = new HashMap<>();
-        codeFunction = 3;
-        params.put("name", codeFunction);
-        NetworkCore.doGet("minecraft.mc", params, handler, SendInfoBean.class);
-        progress = ProgressDialog.show(mContext, null, "操作中...", false);
-    }
-
-    public void onclickClosedServico(View view) {
-        codeFunction = 2;
-        NetworkCore.doGet("minecraft.mc", null, handler, SendInfoBean.class);
-        handler.sendEmptyMessageDelayed(0, 3000);
-        progress = ProgressDialog.show(mContext, null, "操作中...", false);
-    }
-
-    private int codeFunction = 1;
-
-    private ProgressDialog progress = null;
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            if (progress != null) {
-                progress.dismiss();
-            }
-            SendInfoBean serverInfo = (SendInfoBean) msg.obj;
-            if (serverInfo.code == 0) {
-                doShowMesage(serverInfo.msg);
-                return;
-            }
-            switch (codeFunction) {
-                case 1:
-                    doShowToastLong("获取服务器信息！");
-                    updataShowTxtContent(linearScroll, "运行状态：", "已关闭.......");
-                    break;
-
-                case 2:
-                    doShowToastLong("成功关闭服务器！");
-                    updataShowTxtContent(linearScroll, "运行状态：", "已关闭.......");
-                    break;
-                case 3:
-                    doShowToastLong("服务器重启...");
-                    updataShowTxtContent(linearScroll, "运行状态：", "开启中.......");
-                    break;
-                default:
-
-                    break;
-            }
-        }
-    };
 }

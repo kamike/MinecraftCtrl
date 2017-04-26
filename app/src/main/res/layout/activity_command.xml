@@ -39,6 +39,7 @@
         android:hint="输入命令的内容"
         android:inputType="textUri"
         android:padding="8dp" />
+
     <Button
         android:layout_width="match_parent"
         android:layout_marginTop="36dp"
@@ -46,6 +47,8 @@
         android:layout_marginRight="15dp"
         android:text="发送命令"
         android:gravity="center"
+        android:clickable="true"
+        android:onClick="onclickSendCmd"
         android:padding="8dp"
         android:layout_height="wrap_content" />
 

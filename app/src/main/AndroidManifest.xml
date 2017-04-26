@@ -22,7 +22,8 @@
         <activity android:name=".ui.TestActivity" />
         <activity android:name=".ui.ServerInfoActivity" />
         <activity android:name=".ui.ModifyFileActivity" />
-        <activity android:name=".ui.CommandActivity"></activity>
+        <activity android:name=".ui.CommandActivity" />
+        <activity android:name=".ui.SystemLogActivity"></activity>
     </application>
 
 </manifest>

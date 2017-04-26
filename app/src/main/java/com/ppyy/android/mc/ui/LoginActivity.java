@@ -26,6 +26,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void setAllData() {
         if (preference.getBoolean("is_login", false)) {
+            finish();
             doStartOter(ServerInfoActivity.class);
             return;
         }

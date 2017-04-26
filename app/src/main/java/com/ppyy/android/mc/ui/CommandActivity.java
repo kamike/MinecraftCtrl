@@ -77,7 +77,7 @@ public class CommandActivity extends BaseActivity {
             doShowToastLong("输入的内容为空！");
             return;
         }
-        NetworkCore.doGet("write?command=" + listCammand[currentPosition] + " " + str, null, handler, SendInfoBean.class);
+        NetworkCore.doGet("write?command=\"" + listCammand[currentPosition] + " " + str+"\"", null, handler, SendInfoBean.class);
 
     }
 

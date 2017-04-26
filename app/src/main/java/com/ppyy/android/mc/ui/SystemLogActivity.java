@@ -2,6 +2,7 @@ package com.ppyy.android.mc.ui;
 
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -42,4 +43,8 @@ public class SystemLogActivity extends BaseActivity {
             linearScroll.addView(tv);
         }
     };
+
+    public void onclickRefershLog(View view) {
+        setAllData();
+    }
 }

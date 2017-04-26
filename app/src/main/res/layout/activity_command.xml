@@ -51,6 +51,12 @@
         android:onClick="onclickSendCmd"
         android:padding="8dp"
         android:text="发送命令" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/cammand_list"
+        android:padding="15dp"
+        />
 
 
 </LinearLayout>

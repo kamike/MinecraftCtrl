@@ -4,4 +4,5 @@
     <string name="pwd_">密码：</string>
     <string name="account_hint">请输入登陆账号</string>
     <string name="pwd_hint">请输入登陆密码</string>
+    <string name="cammand_list">gamerule 规则 [值]\ngamerule 规则 [值]\n其他命令这样写一下</string>
 </resources>

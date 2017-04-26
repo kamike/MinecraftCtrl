@@ -17,9 +17,9 @@ import com.wangtao.universallylibs.BaseActivity;
 
 public class CommandActivity extends BaseActivity {
     private Spinner sp;
-    private String[] list = {"/say 对所有玩家发送一句话", "/clear 清空玩家物品栏", "/op 给玩家op权限", "/deop 删除op", "/ban 封禁玩家", "/unban 解封玩家"};
+    private String[] list = {"/say 对所有玩家发送一句话", "/clear 清空玩家物品栏", "/op 给玩家op权限", "/deop 删除op", "/ban 封禁玩家", "/unban 解封玩家", "自由命令"};
     private EditText etCammand;
-    private String[] listCammand = {"say", "clear", "op", "deop", "ban", "unban"};
+    private String[] listCammand = {"say", "clear", "op", "deop", "ban", "unban", ""};
 
     @Override
     public void initShowLayout() {
@@ -58,6 +58,9 @@ public class CommandActivity extends BaseActivity {
                     case 5:
                         etCammand.setHint("输入要解禁的玩家名称");
                         break;
+                    case 6:
+                        etCammand.setHint("输入完整的命令");
+                        break;
                 }
                 currentPosition = position;
             }
@@ -77,7 +80,12 @@ public class CommandActivity extends BaseActivity {
             doShowToastLong("输入的内容为空！");
             return;
         }
-        NetworkCore.doGet("write?command=\"" + listCammand[currentPosition] + " " + str+"\"", null, handler, SendInfoBean.class);
+        StringBuilder sb = new StringBuilder("write?command=\"");
+        if (currentPosition < 6) {
+            sb.append(listCammand[currentPosition]).append(" ");
+        }
+        sb.append(str).append("\"");
+        NetworkCore.doGet(sb.toString(), null, handler, SendInfoBean.class);
 
     }
 
@@ -85,8 +93,8 @@ public class CommandActivity extends BaseActivity {
         @Override
         public void handleMessage(Message msg) {
             doLogMsg("cammand:" + msg.obj);
-            if(msg.what<=0){
-                doShowMesage(msg.obj+"");
+            if (msg.what <= 0) {
+                doShowMesage(msg.obj + "");
                 return;
             }
             doShowMesage("执行成功！");

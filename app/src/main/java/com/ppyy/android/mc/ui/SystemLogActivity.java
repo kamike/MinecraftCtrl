@@ -20,7 +20,6 @@ public class SystemLogActivity extends BaseActivity {
         setContentView(R.layout.activity_system_log);
         linearScroll= (LinearLayout) findViewById(R.id.system_log_linear);
         doSetTitle(R.id.log_include,"查看系统日志");
-
     }
 
     @Override

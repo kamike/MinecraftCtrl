@@ -31,6 +31,7 @@ public class ServerInfoActivity extends BaseActivity {
 
     @Override
     public void setAllData() {
+
         NetworkCore.doGet("info", null, handlerInit, ServerInfoBean.class);
         doShowProgress();
         linearScroll.removeAllViews();

@@ -18,6 +18,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void initShowLayout() {
+
         setContentView(R.layout.activity_main);
         etAccount = (EditText) findViewById(R.id.main_account_et);
         etPwd = (EditText) findViewById(R.id.main_pwd_et);

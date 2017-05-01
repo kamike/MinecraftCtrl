@@ -89,6 +89,7 @@ public class WhitelistActivity extends BaseActivity {
                 }
 
                 dialog.dismiss();
+
                 doShowProgress();
                 NetworkCore.doGet("write?command=\"whitelist add " + str + "\"", null, new Handler() {
                     @Override

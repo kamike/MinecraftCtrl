@@ -80,6 +80,7 @@ public class CommandActivity extends BaseActivity {
             doShowToastLong("输入的内容为空！");
             return;
         }
+
         StringBuilder sb = new StringBuilder("write?command=\"");
         if (currentPosition < 6) {
             sb.append(listCammand[currentPosition]).append(" ");

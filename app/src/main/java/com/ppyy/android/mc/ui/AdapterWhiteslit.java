@@ -63,6 +63,7 @@ public class AdapterWhiteslit extends BaseAdapter {
         vh.btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 NetworkCore.doGet("write?command=\"whitelist remove " +list.get(position)+"\"", null, new Handler() {
                     @Override
                     public void handleMessage(Message msg) {

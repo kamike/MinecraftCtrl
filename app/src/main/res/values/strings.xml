@@ -4,5 +4,7 @@
     <string name="pwd_">密码：</string>
     <string name="account_hint">请输入登陆账号</string>
     <string name="pwd_hint">请输入登陆密码</string>
-    <string name="cammand_list">gamerule 规则 [值]\ngamerule 规则 [值]\n其他命令这样写一下</string>
+    <string name="cammand_list">gamerule 规则 [值]\n\ncommandBlockOutput 命令方块执行命令时是否通报管理员\n\ndisableElytraMovementCheck 是否让服务器停止检查使用鞘翅玩家的移动速度
+    doDaylightCycle 是否进行日夜交替和月相变化\n\ndoEntityDrops 非生物实体是否掉落物品 \n\ndoFireTick 火是否传播及自然熄灭 \n\ndoMobLoot 生物是否掉落物品 \n\ndoMobSpawning 生物是否自然生成 \n\ndoTileDrops 方块被破坏时是否掉落物品 \n\ndoWeatherCycle 天气是否变化\n\ndrowningdamage	玩家是否承受窒息伤害\n\nfalldamage	玩家是否承受跌落伤害\n\nfiredamage	玩家是否承受火焰伤害
+    </string>
 </resources>

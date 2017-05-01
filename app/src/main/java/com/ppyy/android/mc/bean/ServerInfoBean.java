@@ -10,4 +10,9 @@ public class ServerInfoBean {
     public String status;
     public String sustainTime;
 
+    public String totalMem;
+    public String usedMem;
+    public String maxPlayer;
+    public String gameVersion;
+
 }

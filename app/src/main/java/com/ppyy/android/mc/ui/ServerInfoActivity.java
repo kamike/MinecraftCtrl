@@ -17,7 +17,7 @@ import com.wangtao.universallylibs.BaseActivity;
 
 public class ServerInfoActivity extends BaseActivity {
     private LinearLayout linearScroll;
-    private String[] items = {"控制台(发送命令)", "配置文件修改(插件)", "权限管理(白名单)", "查看服务器日志", "关闭退出软件"};
+    private String[] items = {"控制台(发送命令)","查看服务器日志", "权限管理(白名单)", "关闭退出软件"};
     private Button btnStart;
     @Override
     public void initShowLayout() {
@@ -31,14 +31,17 @@ public class ServerInfoActivity extends BaseActivity {
 
     @Override
     public void setAllData() {
-
-
         NetworkCore.doGet("info", null, handlerInit, ServerInfoBean.class);
         doShowProgress();
         linearScroll.removeAllViews();
         linearScroll.addView(addShowTxtContent("运行状态：", "停止..."));
-        linearScroll.addView(addShowTxtContent("开启时长：", "1天2小时50分"));
+        linearScroll.addView(addShowTxtContent("开启时间：", "--"));
+        linearScroll.addView(addShowTxtContent("开启时长：", "--"));
+        linearScroll.addView(addShowTxtContent("最大玩家数：", "99"));
         linearScroll.addView(addShowTxtContent("在线玩家：", "5/20"));
+        linearScroll.addView(addShowTxtContent("服务器内存：", "0M"));
+        linearScroll.addView(addShowTxtContent("已使用内存：", "0M"));
+        linearScroll.addView(addShowTxtContent("游戏版本：", "--"));
     }
 
     private Handler handlerInit = new Handler() {
@@ -63,8 +66,13 @@ public class ServerInfoActivity extends BaseActivity {
             }
             updataBtnTxt();
             updataShowTxtContent(linearScroll, "运行状态：", str);
+            updataShowTxtContent(linearScroll, "开启时间：", server.startTime);
             updataShowTxtContent(linearScroll, "开启时长：", server.sustainTime);
+            updataShowTxtContent(linearScroll, "最大玩家数：", server.maxPlayer);
             updataShowTxtContent(linearScroll, "在线玩家：", server.playerNum);
+            updataShowTxtContent(linearScroll, "服务器内存：", server.totalMem);
+            updataShowTxtContent(linearScroll, "已使用内存：", server.usedMem);
+            updataShowTxtContent(linearScroll, "游戏版本：", server.gameVersion);
         }
     };
 
@@ -87,7 +95,6 @@ public class ServerInfoActivity extends BaseActivity {
                 }else{
                     NetworkCore.doGet("start", null, handler, SendInfoBean.class);
                 }
-                doShowProgress();
             }
         };
     }
@@ -107,7 +114,8 @@ public class ServerInfoActivity extends BaseActivity {
             }
             isStarting=!isStarting;
             updataBtnTxt();
-
+            //刷新服务器信息
+            setAllData();
         }
     };
 
@@ -120,17 +128,18 @@ public class ServerInfoActivity extends BaseActivity {
                         doStartOter(CommandActivity.class);
                         break;
                     case 1:
-                        doStartOter(ModifyFileActivity.class);
+                        doStartOter(SystemLogActivity.class);
+
                         break;
                     case 2:
+                        doStartOter(WhitelistActivity.class);
 
                         break;
                     case 3:
-                        doStartOter(SystemLogActivity.class);
-                        break;
-                    case 4:
                         preference.edit().remove("user_account").commit();
                         finish();
+                        break;
+                    case 4:
                         break;
                 }
             }

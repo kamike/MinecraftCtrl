@@ -15,4 +15,5 @@ public class ServerInfoBean {
     public String maxPlayer;
     public String gameVersion;
 
+    public String freeMem;
 }

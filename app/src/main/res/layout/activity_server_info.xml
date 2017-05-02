@@ -48,7 +48,6 @@
 
 
     <Button
-
         style="@style/style_txt_normal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,10 +56,25 @@
         android:padding="18dp"
         android:text="开启服务器"
         android:layout_marginLeft="10dp"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="32dp"
         android:layout_marginStart="10dp"
         android:id="@+id/server_info_start_btn" />
+    <Button
+        style="@style/style_txt_normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:gravity="center"
+        android:padding="18dp"
+        android:text="刷新"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="32dp"
+        android:onClick="onclickRefershInfo"
+        />
+
+
 
 </RelativeLayout>

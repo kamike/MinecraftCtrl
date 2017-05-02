@@ -17,7 +17,7 @@ import com.wangtao.universallylibs.BaseActivity;
 
 public class ServerInfoActivity extends BaseActivity {
     private LinearLayout linearScroll;
-    private String[] items = {"控制台(发送命令)","查看服务器日志", "权限管理(白名单)", "关闭退出软件"};
+    private String[] items = {"控制台(发送命令)","查看服务器日志", "权限管理(白名单)","游戏设置", "关闭退出软件"};
     private Button btnStart;
     @Override
     public void initShowLayout() {
@@ -42,6 +42,7 @@ public class ServerInfoActivity extends BaseActivity {
         linearScroll.addView(addShowTxtContent("在线玩家：", "5/20"));
         linearScroll.addView(addShowTxtContent("服务器内存：", "0M"));
         linearScroll.addView(addShowTxtContent("已使用内存：", "0M"));
+        linearScroll.addView(addShowTxtContent("剩余内存：", "0M"));
         linearScroll.addView(addShowTxtContent("游戏版本：", "--"));
     }
 
@@ -73,6 +74,7 @@ public class ServerInfoActivity extends BaseActivity {
             updataShowTxtContent(linearScroll, "在线玩家：", server.playerNum);
             updataShowTxtContent(linearScroll, "服务器内存：", server.totalMem);
             updataShowTxtContent(linearScroll, "已使用内存：", server.usedMem);
+            updataShowTxtContent(linearScroll, "剩余内存：", server.freeMem);
             updataShowTxtContent(linearScroll, "游戏版本：", server.gameVersion);
         }
     };
@@ -137,13 +139,19 @@ public class ServerInfoActivity extends BaseActivity {
 
                         break;
                     case 3:
-                        preference.edit().remove("user_account").commit();
-                        finish();
+                        doStartOter(SystemSettingActivity.class);
                         break;
                     case 4:
+                        preference.edit().remove("user_account").commit();
+                        finish();
                         break;
                 }
             }
         }).setPositiveButton("取消", null).show();
+    }
+
+    public void onclickRefershInfo(View view) {
+        NetworkCore.doGet("info", null, handlerInit, ServerInfoBean.class);
+        doShowProgress();
     }
 }

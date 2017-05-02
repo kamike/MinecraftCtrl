@@ -183,8 +183,9 @@ public class ServerInfoActivity extends BaseActivity {
                         doStartOter(SystemSettingActivity.class);
                         break;
                     case 4:
-                        preference.edit().remove("user_account").commit();
+                        preference.edit().putBoolean("is_login",false).commit();
                         finish();
+
                         break;
                 }
             }

@@ -33,6 +33,12 @@ public class ServerInfoActivity extends BaseActivity {
     @Override
     public void setAllData() {
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         NetworkCore.doGet("info", null, handlerInit, ServerInfoBean.class);
         doShowProgress();
         initDefault();
@@ -117,7 +123,7 @@ public class ServerInfoActivity extends BaseActivity {
                 isStarting = true;
                 updataBtnTxt();
                 //刷新服务器信息
-                setAllData();
+                onResume();
                 return;
             }
             if (what > 5) {

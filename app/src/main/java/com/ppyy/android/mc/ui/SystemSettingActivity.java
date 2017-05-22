@@ -32,8 +32,8 @@ public class SystemSettingActivity extends BaseActivity {
         listView.setAdapter(new AdapterSystem());
     }
 
-    private String[] arrayName = {"是否允许PVP", "死亡不掉落", "是否承受窒息伤害", "是否承受跌落伤害", "是否承受火焰伤害", "天气是否变化"};
-    private String[] arrayRule = {"pvp", "keepInventory", "drowningdamage", "falldamage", "firedamage", "doWeatherCycle"};
+    private String[] arrayName = {"启用/禁用火的蔓延", "死亡不掉落", "启用/禁用生物掉落物", "启用/禁用生物生成", "启用/禁用生命恢复", "启用/禁用日夜交替"};
+    private String[] arrayRule = {"doFireTick", "keepInventory", "doMobLoot", "doMobSpawning", "naturalRegeneration", "doDaylightCycle"};
 
     private class AdapterSystem extends BaseAdapter {
 
